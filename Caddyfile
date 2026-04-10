@@ -1,10 +1,5 @@
 {
-    email "you@email.com"
-    servers {
-        protocol {
-            experimental_http3
-        }
-    }
+    email kamu@email.com
 }
 
 (secure_headers) {
@@ -20,12 +15,7 @@
 (common_proxy) {
     import secure_headers
 
-    reverse_proxy http://176.97.64.112:80 {
-        header_up Host {host}
-        header_up X-Real-IP {remote_host}
-        header_up X-Forwarded-For {remote_host}
-        header_up X-Forwarded-Proto {scheme}
-    }
+    reverse_proxy http://176.97.64.112:80
 }
 
 otsentiummap.com, www.otsentiummap.com {
