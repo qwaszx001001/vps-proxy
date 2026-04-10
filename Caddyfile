@@ -1,0 +1,41 @@
+{
+    email "you@email.com"
+    servers {
+        protocol {
+            experimental_http3
+        }
+    }
+}
+
+(secure_headers) {
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "no-referrer-when-downgrade"
+    }
+}
+
+(common_proxy) {
+    import secure_headers
+
+    reverse_proxy http://176.97.64.112:80 {
+        header_up Host {host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+}
+
+otsentiummap.com, www.otsentiummap.com {
+    import common_proxy
+}
+
+otsentium.com, www.otsentium.com {
+    import common_proxy
+}
+
+otsentdrone.com, www.otsentdrone.com {
+    import common_proxy
+}
